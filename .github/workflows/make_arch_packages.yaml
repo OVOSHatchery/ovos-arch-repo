@@ -20,7 +20,14 @@ jobs:
       - name: Clone Repositories
         run: |
           mkdir -p builder
+          if [ -d "ovos-arch-repo" ]; then
+            (cd builder && rm -rf ovos-arch-repo)
+          fi
           (cd builder && git clone https://github.com/OpenVoiceOS/ovos-arch-repo)
+
+          if [ -d "ovos-binary-shop" ]; then
+            (cd builder && rm -rf ovos-binary-shop)
+          fi
           (cd builder && git clone https://github.com/OpenVoiceOS/ovos-binary-shop)
       - name: Build Packages
         run: |
