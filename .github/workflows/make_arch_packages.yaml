@@ -2,6 +2,10 @@ name: OVOS Make Arch Packages
 on:
   push:
   workflow_dispatch:
+    inputs:
+      package_list:
+        description: "Packages to Build"
+        required: true
 
 jobs:
   build:
@@ -21,7 +25,7 @@ jobs:
       - name: Build Packages
         run: |
           cd builder/ovos-binary-shop
-          for package in ${INPUT_PACKAGE_LIST//,/ }; do
+          for package in "${{ inputs.package_list }}"; do
             cd $package
             makepkg -s --noconfirm
             cp *.pkg.tar.zst ../ovos-arch-repo
