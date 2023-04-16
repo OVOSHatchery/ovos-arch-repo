@@ -1,0 +1,20 @@
+
+
+
+      - uses: actions/checkout@v3
+        with:
+          ref: dev
+      - name: Cleanup
+        run: |
+          (cd /tmp/build && tar c .) | (cd . && tar xf -)
+          sudo rm -rf python-*/pkg
+          sudo rm -rf python-*/src
+          sudo rm -rf python-*/*.whl
+          sudo rm -rf python-*/*.pkg.tar.zst
+          ls
+          git config --global --add safe.directory /__w/ovos-binary-shop/ovos-binary-shop
+      - name: Commit
+        uses: EndBug/add-and-commit@v9
+        with:
+          message: pkgbuild additional
+          add: '* --force'
