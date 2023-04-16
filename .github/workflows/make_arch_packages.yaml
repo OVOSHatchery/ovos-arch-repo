@@ -8,10 +8,6 @@ jobs:
     runs-on: self-hosted
     container:
       image: manjarolinux/base:latest
-    inputs:
-      package-list:
-        description: 'List of package names to build'
-        required: true
     steps:
       - name: Install Dependencies
         run: |
@@ -25,7 +21,7 @@ jobs:
       - name: Build Packages
         run: |
           cd builder/ovos-binary-shop
-          for package in ${{ join(inputs.package-list, ' ') }}; do
+          for package in ${INPUT_PACKAGE_LIST//,/ }; do
             cd $package
             makepkg -s --noconfirm
             cp *.pkg.tar.zst ../ovos-arch-repo
