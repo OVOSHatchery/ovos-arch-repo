@@ -30,6 +30,9 @@ jobs:
           ref: dev
           path: builder/ovos-binary-shop
           token: ${{ secrets.PAT_TOKEN }}
+          with:
+            submodules: false
+
       - name: Build Packages
         run: |
           cd builder/ovos-binary-shop
