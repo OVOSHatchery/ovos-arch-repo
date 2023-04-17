@@ -26,7 +26,7 @@ jobs:
           path: builder/ovos-arch-repo
       - name: Run Repo-Add
         run: |
-         cd /builder/ovos-arch-repo
+         cd ./builder/ovos-arch-repo
          repo-add ovos-arch-repo.db.tar.gz x86_64/*.pkg.tar.zst
          rm ovos-arch-repo.db
          rm ovos-arch-repo.files
