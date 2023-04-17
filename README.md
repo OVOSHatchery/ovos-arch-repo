@@ -26,3 +26,8 @@ sudo pacman -Sy
 ```
 sudo pacman -S python-ovos-core
 ```
+
+**Install Full Build**
+```
+sudo pacman -S ovos-install-meta-full
+```
