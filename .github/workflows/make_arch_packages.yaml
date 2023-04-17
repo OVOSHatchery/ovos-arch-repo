@@ -29,6 +29,7 @@ jobs:
           repository: OpenVoiceOS/ovos-binary-shop
           ref: dev
           path: builder/ovos-binary-shop
+          token: ${{ secrets.PAT_TOKEN }}
       - name: Build Packages
         run: |
           cd builder/ovos-binary-shop
