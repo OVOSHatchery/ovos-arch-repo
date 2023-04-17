@@ -2,10 +2,6 @@ name: OVOS Make Arch Packages
 on:
   push:
   workflow_dispatch:
-    inputs:
-      package_list:
-        description: "Packages to Build"
-        required: true
 
 jobs:
   build:
@@ -22,10 +18,11 @@ jobs:
         run: |
           git clone https://github.com/OpenVoiceOS/ovos-arch-repo.git /builder/ovos-arch-repo
           git clone https://github.com/OpenVoiceOS/ovos-binary-shop.git /builder/ovos-binary-shop
-      - name: Build Packages
+      - name: Build Packages X86_64
         run: |
           cd /builder/ovos-binary-shop
-          for package in "${{ inputs.package_list }}"; do
+          for package in "python-memory-tempfile,python-combo-lock,python-json-database,python-kthread,python-ovos-utils,python-mycroft-messagebus-client,python-ovos-backend-client,python-rich-click,python-ovos-config,python-quebra-frases,python-ovos-lingua-franca,python-langcodes,python-ovos-bus-client,python-ovos-plugin-manager,python-ovos-workshop,python-simplematch,python-padacioso,python-ovos-core,python-ovos-gui"; do
+            echo $package
             cd $package
             makepkg -s --noconfirm
             mkdir -p /builder/ovos-arch-repo/x86_64/

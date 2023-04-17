@@ -1,9 +1,0 @@
-on:
-jobs:
-  build:
-    runs-on: self-hosted
-    steps:
-    - name: Trigger OVOS Make Arch Packages
-      uses: OpenVoiceOS/ovos-arch-repo/.github/workflows/make_arch_packages.yaml@main
-      with:
-        package_list: "python-memory-tempfile,python-combo-lock,python-json-database,python-kthread,python-ovos-utils,python-mycroft-messagebus-client,python-ovos-backend-client,python-rich-click,python-ovos-config,python-quebra-frases,python-ovos-lingua-franca,python-langcodes,python-ovos-bus-client,python-ovos-plugin-manager,python-ovos-workshop,python-simplematch,python-padacioso,,python-ovos-core,python-ovos-gui"
