@@ -13,9 +13,14 @@ jobs:
         run: |
           sudo pacman -Syyu --noconfirm
           sudo pacman -S --noconfirm base-devel git
-      - name: Clone Repositories
+      - name: Clone OVOS Arch Repository
+        uses: actions/checkout@v3
+        with:
+          repository: OpenVoiceOS/ovos-arch-repo
+          ref: main
+          path: builder/ovos-arch-repo
+      - name: Clone OVOS Binary Shop Repository
         run: |
-          git clone https://github.com/OpenVoiceOS/ovos-arch-repo.git /builder/ovos-arch-repo
           git clone https://github.com/OpenVoiceOS/ovos-binary-shop.git /builder/ovos-binary-shop
       - name: Build Packages X86_64
         run: |
