@@ -33,8 +33,8 @@ jobs:
             echo $package
             cd /builder/ovos-binary-shop/$package
             makepkg -si --noconfirm
-            mkdir -p /builder/ovos-arch-repo/x86_64/
-            mv *.pkg.tar.zst /builder/ovos-arch-repo/x86_64/
+            mkdir -p /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo/x86_64/
+            mv *.pkg.tar.zst /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo/x86_64/
           done
       - name: Fix Git Errors and Cleanup
         run: |
@@ -43,7 +43,6 @@ jobs:
       - name: Commit
         uses: EndBug/add-and-commit@v9
         with:
-          cwd: "./builder/ovos-arch-repo"
           message: "Update Packages"
-          add: "*"
+          add: "*.pkg.tar.zst"
           push: true
