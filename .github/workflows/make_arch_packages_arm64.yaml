@@ -20,6 +20,7 @@ jobs:
       - name: Chown user
         run: |
           sudo chown -R $USER:$USER $GITHUB_WORKSPACE
+          mkdir -p /__w/ovos-arch-repo/ovos-arch-repo/builder/
           sudo chmod -R 777 /__w/ovos-arch-repo/ovos-arch-repo/builder/
           sudo chown -R $USER:$USER /__w/ovos-arch-repo/ovos-arch-repo/builder/
       - name: Clone OVOS Arch Repository
