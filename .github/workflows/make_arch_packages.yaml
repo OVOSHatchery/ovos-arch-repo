@@ -35,10 +35,12 @@ jobs:
       - name: Build Packages
         run: |
           cd /home/packagebuilder/ovos-binary-shop
+          su packagebuilder
           for package in "${{ inputs.package_list }}"; do
             cd $package
-            sudo -u packagebuilder makepkg -s --noconfirm
-            sudo -u packagebuilder mv *.pkg.tar.zst /home/packagebuilder/ovos-arch-repo/x86_64/
+            makepkg -s --noconfirm
+            mkdir -p /home/packagebuilder/ovos-arch-repo/x86_64/
+            mv *.pkg.tar.zst /home/packagebuilder/ovos-arch-repo/x86_64/
           done
       - name: Repo Add Packages
         run: |
