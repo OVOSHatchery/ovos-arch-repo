@@ -18,10 +18,10 @@ jobs:
           sudo chown -R $USER:$USER $GITHUB_WORKSPACE
           sudo chmod -R 777 /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo/
           sudo chown -R $USER:$USER /__w/ovos-arch-repo/ovos-arch-repo/builder/
-     - name: Cleaning up the $GITHUB_WORKSPACE as root from a Docker image
-       run: |
-        sudo rm -rf /__w/ovos-arch-repo/builder/ovos-arch-repo
-        sudo rm -rf /__w/ovos-arch-repo/builder/ovos-binary-shop
+      - name: Cleanup workspace
+        run: |
+          rm -rf /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo
+          rm -rf /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-binary-shop
       - name: Clone OVOS Arch Repository
         uses: actions/checkout@v1
         with:
