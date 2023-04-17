@@ -12,42 +12,32 @@ jobs:
     runs-on: self-hosted
     container:
       image: manjarolinux/base:latest
+      options: --user builder
     steps:
       - name: Install Dependencies
         run: |
           sudo pacman -Syyu --noconfirm
           sudo pacman -S --noconfirm base-devel git
-      - name: Create User
-        run: |
-          sudo useradd -m packagebuilder
-          sudo usermod -aG wheel packagebuilder
-          echo 'packagebuilder ALL=(ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers
       - name: Clone Repositories
         run: |
-          sudo -u packagebuilder git clone https://github.com/OpenVoiceOS/ovos-arch-repo.git /home/packagebuilder/ovos-arch-repo
-          sudo -u packagebuilder git clone https://github.com/OpenVoiceOS/ovos-binary-shop.git /home/packagebuilder/ovos-binary-shop
-      - name: Fix Permissions
-        run: |
-          sudo chmod -R 777 /home/packagebuilder
-          sudo chmod -R 777 /home/packagebuilder/ovos-arch-repo
-          sudo chmod -R 777 /home/packagebuilder/ovos-binary-shop
-          sudo chown -R packagebuilder /home/packagebuilder
+          git clone https://github.com/OpenVoiceOS/ovos-arch-repo.git /builder/ovos-arch-repo
+          git clone https://github.com/OpenVoiceOS/ovos-binary-shop.git /builder/ovos-binary-shop
       - name: Build Packages
         run: |
-          cd /home/packagebuilder/ovos-binary-shop
+          cd /builder/ovos-binary-shop
           for package in "${{ inputs.package_list }}"; do
             cd $package
-            (su packagebuilder && makepkg -s --noconfirm)
-            mkdir -p /home/packagebuilder/ovos-arch-repo/x86_64/
-            mv *.pkg.tar.zst /home/packagebuilder/ovos-arch-repo/x86_64/
+            makepkg -s --noconfirm
+            mkdir -p /builder/ovos-arch-repo/x86_64/
+            mv *.pkg.tar.zst /builder/ovos-arch-repo/x86_64/
           done
       - name: Repo Add Packages
         run: |
-          cd /home/packagebuilder/ovos-arch-repo
+          cd /builder/ovos-arch-repo
           repo-add ovos-arch-repo.db.tar.gz *.pkg.tar.zst
       - name: Commit
         uses: EndBug/add-and-commit@v9
         with:
-          cwd: "./home/packagebuilder/ovos-arch-repo"
+          cwd: "./builder/ovos-arch-repo"
           message: "Update Packages"
           add: "*"
