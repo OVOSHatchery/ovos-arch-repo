@@ -28,17 +28,18 @@ jobs:
         run: |
          cd ./builder/ovos-arch-repo
          repo-add ovos-arch-repo.db.tar.gz x86_64/*.pkg.tar.zst
+      - name: Fix Git Errors and Cleanup
+        run: |
+         git config --global --add safe.directory /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo
+         cd ./builder/ovos-arch-repo
          rm ovos-arch-repo.db
          rm ovos-arch-repo.files
          mv ovos-arch-repo.db.tar.gz ovos-arch-repo.db
          mv ovos-arch-repo.files.tar.gz ovos-arch-repo.files
-      - name: Fix Git Errors and Cleanup
-        run: |
-         git config --global --add safe.directory /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo
       - name: Commit
         uses: EndBug/add-and-commit@v9
         with:
           cwd: "./builder/ovos-arch-repo"
           message: "Update Packages"
-          add: "*.db, *.files"
+          add: "*"
           push: true
