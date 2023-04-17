@@ -28,8 +28,8 @@ jobs:
           done
       - name: Repo Add Packages
         run: |
-          cd /builder/ovos-arch-repo
-          repo-add ovos-arch-repo.db.tar.gz *.pkg.tar.zst
+          cd /builder/ovos-arch-repo/
+          repo-add ovos-arch-repo.db.tar.gz /x86_64/*.pkg.tar.zst
       - name: Commit
         uses: EndBug/add-and-commit@v9
         with:
