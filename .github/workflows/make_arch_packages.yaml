@@ -36,8 +36,9 @@ jobs:
             mkdir -p /builder/ovos-arch-repo/x86_64/
             mv *.pkg.tar.zst /builder/ovos-arch-repo/x86_64/
           done
-      - name: Fix Git Errors
+      - name: Fix Git Errors and Cleanup
         run: |
+         rm -rf /builder/ovos-binary-shop
          git config --global --add safe.directory /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo
       - name: Commit
         uses: EndBug/add-and-commit@v9
@@ -45,3 +46,4 @@ jobs:
           cwd: "./builder/ovos-arch-repo"
           message: "Update Packages"
           add: "*"
+          push: true
