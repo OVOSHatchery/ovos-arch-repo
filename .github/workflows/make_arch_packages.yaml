@@ -35,10 +35,9 @@ jobs:
       - name: Build Packages
         run: |
           cd /home/packagebuilder/ovos-binary-shop
-          su packagebuilder
           for package in "${{ inputs.package_list }}"; do
             cd $package
-            makepkg -s --noconfirm
+            (su packagebuilder && makepkg -s --noconfirm)
             mkdir -p /home/packagebuilder/ovos-arch-repo/x86_64/
             mv *.pkg.tar.zst /home/packagebuilder/ovos-arch-repo/x86_64/
           done
