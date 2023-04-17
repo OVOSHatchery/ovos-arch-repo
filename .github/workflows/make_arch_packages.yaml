@@ -16,6 +16,8 @@ jobs:
       - name: Chown user
         run: |
           sudo chown -R $USER:$USER $GITHUB_WORKSPACE
+          sudo chmod -R 777 /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo/
+          sudo chown -R $USER:$USER /__w/ovos-arch-repo/ovos-arch-repo/builder/
       - name: Clone OVOS Arch Repository
         uses: actions/checkout@v3
         with:
