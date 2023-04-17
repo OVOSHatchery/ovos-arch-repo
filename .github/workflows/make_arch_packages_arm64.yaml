@@ -13,15 +13,15 @@ jobs:
         run: |
           sudo pacman -Syyu --noconfirm
           sudo pacman -S --noconfirm base-devel git
-      - name: Chown user
-        run: |
-          sudo chown -R $USER:$USER $GITHUB_WORKSPACE
-          sudo chmod -R 777 /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo/
-          sudo chown -R $USER:$USER /__w/ovos-arch-repo/ovos-arch-repo/builder/
       - name: Cleanup workspace
         run: |
           rm -rf /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo
           rm -rf /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-binary-shop
+      - name: Chown user
+        run: |
+          sudo chown -R $USER:$USER $GITHUB_WORKSPACE
+          sudo chmod -R 777 /__w/ovos-arch-repo/ovos-arch-repo/builder/
+          sudo chown -R $USER:$USER /__w/ovos-arch-repo/ovos-arch-repo/builder/
       - name: Clone OVOS Arch Repository
         uses: actions/checkout@v1
         with:
