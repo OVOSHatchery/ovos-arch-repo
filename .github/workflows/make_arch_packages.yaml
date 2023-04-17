@@ -26,6 +26,11 @@ jobs:
         run: |
           sudo -u packagebuilder git clone https://github.com/OpenVoiceOS/ovos-arch-repo.git /home/packagebuilder/ovos-arch-repo
           sudo -u packagebuilder git clone https://github.com/OpenVoiceOS/ovos-binary-shop.git /home/packagebuilder/ovos-binary-shop
+      - name: Fix Permissions
+        run: |
+          sudo chmod -R 777 /home/packagebuilder
+          sudo chmod -R 777 /home/packagebuilder/ovos-arch-repo
+          sudo chmod -R 777 /home/packagebuilder/ovos-binary-shop
       - name: Build Packages
         run: |
           cd /home/packagebuilder/ovos-binary-shop
