@@ -24,12 +24,8 @@ jobs:
             cd /builder/ovos-binary-shop/$package
             makepkg -si --noconfirm
             mkdir -p /builder/ovos-arch-repo/x86_64/
-            mv *.pkg.tar.zst /builder/ovos-arch-repo/x86_64/
+            mv *.pkg.tar /builder/ovos-arch-repo/x86_64/
           done
-      - name: Repo Add Packages
-        run: |
-          cd /builder/ovos-arch-repo/
-          repo-add ovos-arch-repo.db.tar.gz /x86_64/*.pkg.tar.zst
       - name: Commit
         uses: EndBug/add-and-commit@v9
         with:
