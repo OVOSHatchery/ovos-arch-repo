@@ -26,12 +26,12 @@ jobs:
           path: builder/ovos-arch-repo
       - name: Run Repo-Add
         run: |
-         cd ./builder/ovos-arch-repo
-         repo-add ovos-arch-repo.db.tar.gz x86_64/*.pkg.tar.zst
+         cd ./builder/ovos-arch-repo/x86_64/
+         repo-add ovos-arch-repo.db.tar.gz *.pkg.tar.zst
       - name: Fix Git Errors and Cleanup
         run: |
          git config --global --add safe.directory /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo
-         cd ./builder/ovos-arch-repo
+         cd ./builder/ovos-arch-repo/x86_64
          rm ovos-arch-repo.db
          rm ovos-arch-repo.files
          mv ovos-arch-repo.db.tar.gz ovos-arch-repo.db
