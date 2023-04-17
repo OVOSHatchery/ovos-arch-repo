@@ -24,7 +24,7 @@ jobs:
           ref: main
           path: builder/ovos-arch-repo
       - name: Checkout ovos-binary-shop
-        uses: actions/checkout@v3
+        uses: actions/checkout@v2
         with:
           repository: OpenVoiceOS/ovos-binary-shop
           ref: dev
