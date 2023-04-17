@@ -12,7 +12,7 @@ jobs:
       - name: Install Dependencies
         run: |
           sudo pacman -Syyu --noconfirm
-          sudo pacman -S --noconfirm base-devel git
+          sudo pacman -S --noconfirm base-devel git qemu qemu-user-static qemu-user-static-binfmt
       - name: Chown user
         run: |
           sudo chown -R $USER:$USER $GITHUB_WORKSPACE
