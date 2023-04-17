@@ -31,6 +31,7 @@ jobs:
           sudo chmod -R 777 /home/packagebuilder
           sudo chmod -R 777 /home/packagebuilder/ovos-arch-repo
           sudo chmod -R 777 /home/packagebuilder/ovos-binary-shop
+          sudo chown -R packagebuilder /home/packagebuilder
       - name: Build Packages
         run: |
           cd /home/packagebuilder/ovos-binary-shop
