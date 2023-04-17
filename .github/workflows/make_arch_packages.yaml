@@ -26,6 +26,9 @@ jobs:
             mkdir -p /builder/ovos-arch-repo/x86_64/
             mv *.pkg.tar.zst /builder/ovos-arch-repo/x86_64/
           done
+      - name: Fix Git Errors
+        run: |
+         git config --global --add safe.directory /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo
       - name: Commit
         uses: EndBug/add-and-commit@v9
         with:
