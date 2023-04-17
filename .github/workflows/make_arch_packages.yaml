@@ -24,14 +24,9 @@ jobs:
           ref: main
           path: builder/ovos-arch-repo
       - name: Checkout ovos-binary-shop
-        uses: actions/checkout@v2
-        with:
-          repository: OpenVoiceOS/ovos-binary-shop
-          ref: dev
-          path: builder/ovos-binary-shop
-          token: ${{ secrets.PAT_TOKEN }}
-          submodules: false
-
+        run: |
+          (cd builder && rm -rf ovos-binary-shop)
+          git clone https://github.com/OpenVoiceOS/ovos-binary-shop builder/ovos-binary-shop
       - name: Build Packages
         run: |
           cd builder/ovos-binary-shop
