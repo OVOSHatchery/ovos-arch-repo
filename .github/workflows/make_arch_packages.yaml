@@ -13,6 +13,9 @@ jobs:
         run: |
           sudo pacman -Syyu --noconfirm
           sudo pacman -S --noconfirm base-devel git
+      - name: Chown user
+        run: |
+          sudo chown -R $USER:$USER $GITHUB_WORKSPACE
       - name: Clone OVOS Arch Repository
         uses: actions/checkout@v3
         with:
