@@ -19,28 +19,28 @@ jobs:
           sudo pacman -S --noconfirm base-devel git
       - name: Create User
         run: |
-          sudo useradd -m builder
-          sudo usermod -aG wheel builder
-          echo 'builder ALL=(ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers
+          sudo useradd -m packagebuilder
+          sudo usermod -aG wheel packagebuilder
+          echo 'packagebuilder ALL=(ALL) NOPASSWD: ALL' | sudo tee -a /etc/sudoers
       - name: Clone Repositories
         run: |
-          sudo -u builder git clone https://github.com/OpenVoiceOS/ovos-arch-repo.git /home/builder/ovos-arch-repo
-          sudo -u builder git clone https://github.com/OpenVoiceOS/ovos-binary-shop.git /home/builder/ovos-binary-shop
+          sudo -u packagebuilder git clone https://github.com/OpenVoiceOS/ovos-arch-repo.git /home/packagebuilder/ovos-arch-repo
+          sudo -u packagebuilder git clone https://github.com/OpenVoiceOS/ovos-binary-shop.git /home/packagebuilder/ovos-binary-shop
       - name: Build Packages
         run: |
-          cd /home/builder/ovos-binary-shop
+          cd /home/packagebuilder/ovos-binary-shop
           for package in "${{ inputs.package_list }}"; do
             cd $package
-            sudo -u builder makepkg -s --noconfirm
-            sudo -u builder mv *.pkg.tar.zst /home/builder/ovos-arch-repo/x86_64/
+            sudo -u packagebuilder makepkg -s --noconfirm
+            sudo -u packagebuilder mv *.pkg.tar.zst /home/packagebuilder/ovos-arch-repo/x86_64/
           done
       - name: Repo Add Packages
         run: |
-          cd builder/ovos-arch-repo
+          cd /home/packagebuilder/ovos-arch-repo
           repo-add ovos-arch-repo.db.tar.gz *.pkg.tar.zst
       - name: Commit
         uses: EndBug/add-and-commit@v9
         with:
-          cwd: "./home/builder/ovos-arch-repo"
+          cwd: "./home/packagebuilder/ovos-arch-repo"
           message: "Update Packages"
           add: "*"
