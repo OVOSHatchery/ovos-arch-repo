@@ -1,0 +1,45 @@
+name: OVOS Run Repo Add on Arch Packages Arm64
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: self-hosted
+    container:
+      image: manjarolinux/base:latest
+      options: --user builder --platform linux/arm64
+    steps:
+      - name: Install Dependencies
+        run: |
+          sudo pacman -Syyu --noconfirm
+          sudo pacman -S --noconfirm base-devel git
+      - name: Chown user
+        run: |
+          sudo chown -R $USER:$USER $GITHUB_WORKSPACE
+          sudo chmod -R 777 /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo/
+          sudo chown -R $USER:$USER /__w/ovos-arch-repo/ovos-arch-repo/builder/
+      - name: Clone OVOS Arch Repository
+        uses: actions/checkout@v3
+        with:
+          repository: OpenVoiceOS/ovos-arch-repo
+          ref: main
+          path: builder/ovos-arch-repo
+      - name: Run Repo-Add
+        run: |
+         cd ./builder/ovos-arch-repo/aarch64/
+         repo-add ovos-arch-repo.db.tar.gz *.pkg.tar.zst
+      - name: Fix Git Errors and Cleanup
+        run: |
+         git config --global --add safe.directory /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo
+         cd ./builder/ovos-arch-repo/aarch64
+         rm ovos-arch-repo.db
+         rm ovos-arch-repo.files
+         mv ovos-arch-repo.db.tar.gz ovos-arch-repo.db
+         mv ovos-arch-repo.files.tar.gz ovos-arch-repo.files
+      - name: Commit
+        uses: EndBug/add-and-commit@v9
+        with:
+          cwd: "./builder/ovos-arch-repo"
+          message: "Update Packages"
+          add: "*"
+          push: true

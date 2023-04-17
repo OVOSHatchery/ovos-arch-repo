@@ -1,4 +1,4 @@
-name: OVOS Run Repo Add on Arch Packages
+name: OVOS Run Repo Add on Arch Packages x86
 on:
   workflow_dispatch:
 
