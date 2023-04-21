@@ -2,7 +2,7 @@
 OpenVoice OS Arch Packages Repository
 
 #### How To Use OVOS Arch Repository
-**Note**: *WIP* Currently only supports x86_64, more architectures and packages coming soon
+Platforms Supported: x86_64, aarch64(Arm64)
 
 **Edit Pacman.conf to add OVOS Repository**
 ```
