@@ -1,33 +1,25 @@
-name: OVOS Make Arch Packages Arm64
+name: OVOS Make Arch Packages ARM64
 on:
   workflow_dispatch:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: [self-hosted, Linux, ARM64]
     container:
       image: manjarolinux/base:latest
-      options: --user builder --platform linux/arm64
+      options: --user builder
     steps:
       - name: Install Dependencies
         run: |
           sudo pacman -Syyu --noconfirm
           sudo pacman -S --noconfirm base-devel git
-      - name: Cleanup workspace
-        run: |
-          rm -rf /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo
-          rm -rf /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-binary-shop
       - name: Chown user
         run: |
-          echo $GITHUB_WORKSPACE
           sudo chown -R $USER:$USER $GITHUB_WORKSPACE
-          mkdir -p /__w/ovos-arch-repo/ovos-arch-repo/builder/
-          sudo chmod -R 777 /__w/ovos-arch-repo/ovos-arch-repo/builder/
+          sudo chmod -R 777 /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo/
           sudo chown -R $USER:$USER /__w/ovos-arch-repo/ovos-arch-repo/builder/
-          sudo chmod -R 777 /__w/ovos-arch-repo/builder/
-          sudo chown -R $USER:$USER /__w/ovos-arch-repo/builder/
       - name: Clone OVOS Arch Repository
-        uses: actions/checkout@v1
+        uses: actions/checkout@v3
         with:
           repository: OpenVoiceOS/ovos-arch-repo
           ref: main
