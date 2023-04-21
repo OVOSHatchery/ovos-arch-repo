@@ -4,10 +4,10 @@ on:
 
 jobs:
   build:
-    runs-on: self-hosted
+    runs-on: [self-hosted, Linux, ARM64]
     container:
       image: manjarolinux/base:latest
-      options: --user builder --platform linux/arm64
+      options: --user builder
     steps:
       - name: Install Dependencies
         run: |
@@ -15,9 +15,10 @@ jobs:
           sudo pacman -S --noconfirm base-devel git
       - name: Chown user
         run: |
+          mkdir -p builder
           sudo chown -R $USER:$USER $GITHUB_WORKSPACE
-          sudo chmod -R 777 /__w/ovos-arch-repo/ovos-arch-repo/builder/ovos-arch-repo/
-          sudo chown -R $USER:$USER /__w/ovos-arch-repo/ovos-arch-repo/builder/
+          sudo chmod -R 777 /__w/ovos-arch-repo/ovos-arch-repo/
+          sudo chown -R $USER:$USER /__w/ovos-arch-repo/ovos-arch-repo/
       - name: Clone OVOS Arch Repository
         uses: actions/checkout@v3
         with:
